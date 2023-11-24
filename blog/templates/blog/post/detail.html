@@ -1,0 +1,27 @@
+{% extends 'blog/base.html' %}
+{% block title %}page detail product{% endblock %}
+
+
+{% block content %}
+<h1>{{ post.title }}</h1>
+<h2>Post {{ post.publisher }} by {{ post.author }}</h2>
+
+<p>{{ post.body|linebreaks }}</p>
+
+<h4>Similar post</h4>
+{% for post in similar_posts %}
+<p>
+    <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
+</p>
+{% empty %}
+    <p>Not post similar</p>
+{% endfor %}
+
+<!--додавляем коментарии к посту-->
+{% with comment.count as total_comments %}
+    <h2>
+        {{ total_comments }} comment {{ total_comments|pluralize }}
+    </h2>
+{% endwith %}
+{% include "blog/post/includes/comment_form.html" %}
+{% endblock content %}
